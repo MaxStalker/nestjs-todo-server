@@ -15,4 +15,6 @@ export class Todo {
 }
 
 export const TodoSchema = SchemaFactory.createForClass(Todo);
+TodoSchema.index({ title: 'text' });
+
 export type TodoDocument = HydratedDocument<Todo>;

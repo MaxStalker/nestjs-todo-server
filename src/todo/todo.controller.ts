@@ -26,8 +26,9 @@ export class TodoController {
   @Get()
   @ApiQuery({ name: 'skip', type: 'number', required: false })
   @ApiQuery({ name: 'limit', type: 'number', required: false })
-  findAll(@Query() { skip, limit }: PaginationParams) {
-    return this.todoService.findAll(skip, limit);
+  @ApiQuery({ name: 'search', type: 'string', required: false })
+  findAll(@Query() { skip, limit, search }: PaginationParams) {
+    return this.todoService.findAll(skip, limit, search);
   }
 
   @Get(':id')

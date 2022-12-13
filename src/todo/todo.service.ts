@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -13,17 +13,24 @@ export class TodoService {
     return this.todoModel.create(createTodoDto);
   }
 
-  async findAll(skip = 0, limit = 10) {
-    const query = this.todoModel
-      .find()
-      .sort({ _id: 1 })
-      .skip(skip)
-      .limit(limit);
+  async findAll(skip = 0, limit = 10, search?: string) {
+    const filters: FilterQuery<TodoDocument> = {};
 
+    if (search) {
+      filters.$text = {
+        $search: search,
+      };
+    }
+
+    return this.todoModel.find(filters).sort({ _id: 1 }).skip(skip);
+
+    // This is solution to return number of items in the collection
+    /*
     const results = await query;
     const count = await this.todoModel.count();
 
     return { results, count };
+     */
   }
 
   findOne(id: string) {
