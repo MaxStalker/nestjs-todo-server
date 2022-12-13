@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { PaginationParams } from '../paginationParams';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('todo')
 export class TodoController {
@@ -13,8 +24,10 @@ export class TodoController {
   }
 
   @Get()
-  findAll() {
-    return this.todoService.findAll();
+  @ApiQuery({ name: 'skip', type: 'number', required: false })
+  @ApiQuery({ name: 'limit', type: 'number', required: false })
+  findAll(@Query() { skip, limit }: PaginationParams) {
+    return this.todoService.findAll(skip, limit);
   }
 
   @Get(':id')

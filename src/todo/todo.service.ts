@@ -13,8 +13,17 @@ export class TodoService {
     return this.todoModel.create(createTodoDto);
   }
 
-  findAll(): Promise<Todo[]> {
-    return this.todoModel.find().exec();
+  async findAll(skip = 0, limit = 10) {
+    const query = this.todoModel
+      .find()
+      .sort({ _id: 1 })
+      .skip(skip)
+      .limit(limit);
+
+    const results = await query;
+    const count = await this.todoModel.count();
+
+    return { results, count };
   }
 
   findOne(id: string) {
