@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 const schemaOptions = {
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+  versionKey: false,
 };
 
 @Schema(schemaOptions)

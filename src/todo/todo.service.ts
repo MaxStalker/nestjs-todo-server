@@ -22,7 +22,7 @@ export class TodoService {
       };
     }
 
-    return this.todoModel.find(filters).sort({ _id: 1 }).skip(skip);
+    return this.todoModel.find(filters).sort({ _id: -1 }).skip(skip);
 
     // This is solution to return number of items in the collection
     /*
