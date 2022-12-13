@@ -5,6 +5,6 @@ export const databaseProviders = [
   {
     provide: name,
     useFactory: (): Promise<typeof mongoose> =>
-      mongoose.connect('mongodb://localhost'),
+      mongoose.connect('mongodb://localhost:27017/basic'),
   },
 ];
